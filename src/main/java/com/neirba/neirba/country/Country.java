@@ -4,6 +4,7 @@ import com.neirba.neirba.city.City;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
         @UniqueConstraint(name = "country_name",columnNames = "name")
 })
 @Getter @Setter @RequiredArgsConstructor @NoArgsConstructor @ToString
-public class Country {
+public class Country implements Serializable {
     @Id
     @Column(updatable = false, nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,7 @@ import com.neirba.neirba.neighborhood.Neighborhood;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 
 })
 @Getter @Setter @RequiredArgsConstructor @NoArgsConstructor @ToString
-public class City {
+public class City implements Serializable {
     @Id
     @Column(updatable = false, nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
