@@ -1,14 +1,12 @@
-package com.neirba.neirba.neighborhood;
+package com.neirba.neirba.country;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Getter @Setter @RequiredArgsConstructor @NoArgsConstructor @ToString
-public class Neighborhood implements Serializable {
-
+public class Country {
     @Id
     @Column(updatable = false, nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +14,8 @@ public class Neighborhood implements Serializable {
     //NonNull added to everything except "Id" to make a constructor with lombok without ID
     @NonNull
     private String name;
-    @NonNull
-    private String neighborhoodType;
+
+
+
 
 }
