@@ -1,11 +1,15 @@
 package com.neirba.neirba.neighborhood;
 
+import com.neirba.neirba.city.City;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "neighborhood_name",columnNames = "name")
+})
 @Getter @Setter @RequiredArgsConstructor @NoArgsConstructor @ToString
 public class Neighborhood implements Serializable {
 
@@ -18,5 +22,10 @@ public class Neighborhood implements Serializable {
     private String name;
     @NonNull
     private String neighborhoodType;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_name", referencedColumnName = "name", nullable = false,
+            foreignKey=@ForeignKey(name = "FK_city_neighborhood"))
+    private City city;
 
 }
