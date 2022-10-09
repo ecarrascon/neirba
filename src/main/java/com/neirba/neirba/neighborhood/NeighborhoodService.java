@@ -1,6 +1,6 @@
 package com.neirba.neirba.neighborhood;
 
-import com.neirba.neirba.exception.UserNotFoundException;
+import com.neirba.neirba.exception.NeighborhoodNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class NeighborhoodService {
 
     public Neighborhood findNeighborhoodById(Long id) {
         return neighborhoodRepo.findNeighborhoodById(id).orElseThrow(() ->
-                new UserNotFoundException("Neighborhood with id " + id + " does not exist"));
+                new NeighborhoodNotFoundException("Neighborhood with id " + id + " does not exist"));
     }
 
     public Neighborhood updateNeighborhood(Neighborhood neighborhood) {

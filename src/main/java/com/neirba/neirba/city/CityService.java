@@ -1,6 +1,6 @@
 package com.neirba.neirba.city;
 
-import com.neirba.neirba.exception.UserNotFoundException;
+import com.neirba.neirba.exception.CityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class CityService {
 
     public City findCityById(Long id) {
         return cityRepo.findCityById(id).orElseThrow(() ->
-                new UserNotFoundException("City with id " + id + " does not exist"));
+                new CityNotFoundException("City with id " + id + " does not exist"));
     }
 
     public City updateCity(City city) {

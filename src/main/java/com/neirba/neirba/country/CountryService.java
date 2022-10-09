@@ -1,6 +1,6 @@
 package com.neirba.neirba.country;
 
-import com.neirba.neirba.exception.UserNotFoundException;
+import com.neirba.neirba.exception.CountryNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class CountryService {
 
     public Country findCountryById(Long id) {
         return countryRepo.findCountryById(id).orElseThrow(() ->
-                new UserNotFoundException("Country with id " + id + " does not exist"));
+                new CountryNotFoundException("Country with id " + id + " does not exist"));
     }
 
     public Country updateCountry(Country country) {
