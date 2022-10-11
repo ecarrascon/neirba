@@ -26,6 +26,11 @@ public class CountryService {
                 new CountryNotFoundException("Country with id " + id + " does not exist"));
     }
 
+    public Country findCountryByName(String name) {
+        return countryRepo.findCountryByName(name).orElseThrow(() ->
+                new CountryNotFoundException("Country with name " + name + " does not exist"));
+    }
+
     public Country updateCountry(Country country) {
         return countryRepo.save(country);
     }
