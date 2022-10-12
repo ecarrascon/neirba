@@ -1,5 +1,6 @@
 package com.neirba.neirba.country;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neirba.neirba.city.City;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Country implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<City> cities = new HashSet<>();
 
 

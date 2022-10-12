@@ -1,6 +1,9 @@
 package com.neirba.neirba.neighborhood;
 
 
+import com.neirba.neirba.city.City;
+import com.neirba.neirba.city.CityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/neighborhood")
 public class NeighborhoodController {
-    private final NeighborhoodService neighborhoodService;
-
-    public NeighborhoodController(NeighborhoodService neighborhoodService) {
-        this.neighborhoodService = neighborhoodService;
-    }
+    @Autowired
+    private NeighborhoodService neighborhoodService;
+    @Autowired
+    private CityService cityService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Neighborhood>> getAllNeighborhoods() {
@@ -28,10 +30,21 @@ public class NeighborhoodController {
         return ResponseEntity.ok(neighborhood);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Neighborhood> addNeighborhood(@RequestBody Neighborhood neighborhood) {
-        Neighborhood newNeighborhood = neighborhoodService.addNeighborhood(neighborhood);
-        return new ResponseEntity<>(newNeighborhood, HttpStatus.CREATED);
+    @PostMapping("/add/{countryName}/{cityName}")
+    public ResponseEntity<Neighborhood> addNeighborhood(@PathVariable(value = "countryName") String countryName, @PathVariable(value = "cityName") String cityName, @RequestBody Neighborhood neighborhood) {
+        City city;
+        try {
+            city = cityService.findCityByName(cityName);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (city.getCountry().getName().equals(countryName)) {
+            neighborhood.setCity(city);
+            Neighborhood newNeighborhood = neighborhoodService.addNeighborhood(neighborhood);
+            return ResponseEntity.ok(newNeighborhood);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/update")

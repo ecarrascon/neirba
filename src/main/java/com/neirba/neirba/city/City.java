@@ -1,5 +1,7 @@
 package com.neirba.neirba.city;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neirba.neirba.country.Country;
 import com.neirba.neirba.neighborhood.Neighborhood;
 import lombok.*;
@@ -27,9 +29,11 @@ public class City implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "country_name", referencedColumnName = "name", nullable = false,
             foreignKey=@ForeignKey(name = "FK_country_city"))
+    @JsonBackReference
     private Country country;
 
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Neighborhood> neighborhoods = new HashSet<>();
 
 

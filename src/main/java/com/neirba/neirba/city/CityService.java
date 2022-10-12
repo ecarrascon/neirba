@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public class CityService {
+
     private final CityRepo cityRepo;
 
     public CityService(CityRepo cityRepo) {
@@ -26,6 +27,11 @@ public class CityService {
                 new CityNotFoundException("City with id " + id + " does not exist"));
     }
 
+    public City findCityByName(String name) {
+        return cityRepo.findCityByName(name).orElseThrow(() ->
+                new CityNotFoundException("City with name " + name + " does not exist"));
+    }
+
     public City updateCity(City city) {
         return cityRepo.save(city);
     }
@@ -33,5 +39,6 @@ public class CityService {
     public void deleteCity(Long id) {
         cityRepo.deleteById(id);
     }
+
 
 }

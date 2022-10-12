@@ -1,5 +1,6 @@
 package com.neirba.neirba.neighborhood;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.neirba.neirba.city.City;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Neighborhood implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "city_name", referencedColumnName = "name", nullable = false,
             foreignKey=@ForeignKey(name = "FK_city_neighborhood"))
+    @JsonBackReference
     private City city;
 
 }

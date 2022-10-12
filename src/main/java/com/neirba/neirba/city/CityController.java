@@ -1,5 +1,8 @@
 package com.neirba.neirba.city;
 
+import com.neirba.neirba.country.CountryService;
+import com.neirba.neirba.exception.CountryNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/city")
 public class CityController {
-    private final CityService cityService;
-
-    public CityController(CityService cityService) {
-        this.cityService = cityService;
-    }
+    @Autowired
+    private  CityService cityService;
+    @Autowired
+    private CountryService countryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<City>> getAllCities() {
@@ -27,8 +29,13 @@ public class CityController {
         return ResponseEntity.ok(city);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<City> addCity(@RequestBody City city) {
+    @PostMapping("/add/{countryName}")
+    public ResponseEntity<City> addCity(@PathVariable(value = "countryName") String countryName, @RequestBody City city) {
+        try {
+            city.setCountry(countryService.findCountryByName(countryName));
+        } catch (CountryNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         City newCity = cityService.addCity(city);
         return new ResponseEntity<>(newCity, HttpStatus.CREATED);
     }
