@@ -22,6 +22,15 @@ public class CityService {
         return cityRepo.findAll();
     }
 
+    public List<City> findAllByCountryName(String countryName) {
+        return cityRepo.findAllByCountryName(countryName);
+    }
+
+    public City findCityByNameAndCountryName(String cityName, String countryName) {
+        return cityRepo.findCityByNameAndCountryName(cityName, countryName)
+                .orElseThrow(() -> new CityNotFoundException("City " + cityName + " not found"));
+    }
+
     public City findCityById(Long id) {
         return cityRepo.findCityById(id).orElseThrow(() ->
                 new CityNotFoundException("City with id " + id + " does not exist"));

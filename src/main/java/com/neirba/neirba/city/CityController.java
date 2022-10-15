@@ -29,6 +29,20 @@ public class CityController {
         return ResponseEntity.ok(city);
     }
 
+    @GetMapping("/find/country/{countryName}")
+    public ResponseEntity<List<City>> getCitiesByCountryName(@PathVariable("countryName") String countryName) {
+        List<City> cities = cityService.findAllByCountryName(countryName);
+        return ResponseEntity.ok(cities);
+    }
+
+    @GetMapping("/find/city/{cityName}/country/{countryName}")
+    public ResponseEntity<City> getCityByCountryNameAndCityName(@PathVariable("countryName") String countryName, @PathVariable("cityName") String cityName) {
+        City city = cityService.findCityByNameAndCountryName(cityName, countryName);
+        return ResponseEntity.ok(city);
+    }
+
+
+
     @PostMapping("/add/{countryName}")
     public ResponseEntity<City> addCity(@PathVariable(value = "countryName") String countryName, @RequestBody City city) {
         try {
