@@ -30,8 +30,23 @@ public class NeighborhoodController {
         return ResponseEntity.ok(neighborhood);
     }
 
+    @GetMapping("/find/all/city/{cityName}")
+    public ResponseEntity<List<Neighborhood>> getNeighborhoodsByCityName(@PathVariable("cityName") String cityName) {
+        List<Neighborhood> neighborhoods = neighborhoodService.findAllByCityName(cityName);
+        return ResponseEntity.ok(neighborhoods);
+    }
+
+    @GetMapping("/find/neighborhood/{neighborhoodName}/city/{cityName}")
+    public ResponseEntity<Neighborhood> getNeighborhoodByCityNameAndNeighborhoodName
+            (@PathVariable("cityName") String cityName, @PathVariable("neighborhoodName") String neighborhoodName) {
+        Neighborhood neighborhood = neighborhoodService.findNeighborhoodByNameAndCityName(neighborhoodName, cityName);
+        return ResponseEntity.ok(neighborhood);
+    }
+
     @PostMapping("/add/{countryName}/{cityName}")
-    public ResponseEntity<Neighborhood> addNeighborhood(@PathVariable(value = "countryName") String countryName, @PathVariable(value = "cityName") String cityName, @RequestBody Neighborhood neighborhood) {
+    public ResponseEntity<Neighborhood> addNeighborhood
+            (@PathVariable(value = "countryName")
+             String countryName, @PathVariable(value = "cityName") String cityName, @RequestBody Neighborhood neighborhood) {
         City city;
         try {
             city = cityService.findCityByName(cityName);

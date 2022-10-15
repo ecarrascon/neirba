@@ -33,4 +33,13 @@ public class NeighborhoodService {
     public void deleteNeighborhood(Long id) {
         neighborhoodRepo.deleteById(id);
     }
+
+    public List<Neighborhood> findAllByCityName(String cityName) {
+        return neighborhoodRepo.findAllByCityName(cityName);
+    }
+
+    public Neighborhood findNeighborhoodByNameAndCityName(String neighborhoodName, String cityName) {
+        return neighborhoodRepo.findNeighborhoodByNameAndCityName(neighborhoodName, cityName)
+                .orElseThrow(() -> new NeighborhoodNotFoundException("Neighborhood " + neighborhoodName + " not found"));
+    }
 }

@@ -29,7 +29,7 @@ public class CityController {
         return ResponseEntity.ok(city);
     }
 
-    @GetMapping("/find/country/{countryName}")
+    @GetMapping("/find/all/country/{countryName}")
     public ResponseEntity<List<City>> getCitiesByCountryName(@PathVariable("countryName") String countryName) {
         List<City> cities = cityService.findAllByCountryName(countryName);
         return ResponseEntity.ok(cities);
