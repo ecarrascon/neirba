@@ -1,4 +1,4 @@
-package com.neirba.neirba.security;
+package com.neirba.neirba.security.user;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,14 +26,8 @@ public class UserSecurity implements UserDetails {
     @NonNull
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @NonNull
-    private Boolean banned;
-    @NonNull
-    private Boolean enabled;
-
-
-
-
+    private Boolean banned = false;
+    private Boolean enabled =false;
 
 
     @Override
@@ -41,15 +35,14 @@ public class UserSecurity implements UserDetails {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);
     }
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override

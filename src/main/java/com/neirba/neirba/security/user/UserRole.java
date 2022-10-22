@@ -1,4 +1,4 @@
-package com.neirba.neirba.security;
+package com.neirba.neirba.security.user;
 
 public enum UserRole {
     ADMIN,
