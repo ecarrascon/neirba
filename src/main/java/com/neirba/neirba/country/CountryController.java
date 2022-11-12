@@ -1,5 +1,7 @@
 package com.neirba.neirba.country;
 
+import com.neirba.neirba.dto.CountryDTO;
+import com.neirba.neirba.dto.mapper.CountryMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+    private final CountryMapper countryMapper = CountryMapper.INSTANCE;
+
     @GetMapping("/all")
-    public ResponseEntity<List<Country>> getAllCountries() {
-        List<Country> countries = countryService.findAllCountries();
-        return ResponseEntity.ok(countries);
+    public ResponseEntity<List<CountryDTO>> getAllCountries() {
+        List<CountryDTO> countriesDTO = countryMapper.countriesToCountriesDTO(countryService.findAllCountries());
+        return ResponseEntity.ok(countriesDTO);
     }
 
     @GetMapping("/find/name/{name}")
