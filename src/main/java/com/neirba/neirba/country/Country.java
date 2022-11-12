@@ -23,7 +23,7 @@ public class Country implements Serializable {
     @NonNull
     private String name;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<City> cities = new HashSet<>();
 
