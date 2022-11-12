@@ -32,7 +32,7 @@ public class City implements Serializable {
     @JsonBackReference
     private Country country;
 
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Neighborhood> neighborhoods = new HashSet<>();
 
