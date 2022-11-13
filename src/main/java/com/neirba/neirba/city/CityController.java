@@ -1,8 +1,9 @@
 package com.neirba.neirba.city;
 
 import com.neirba.neirba.country.CountryService;
+import com.neirba.neirba.dto.CityDTO;
+import com.neirba.neirba.dto.mapper.CityMapper;
 import com.neirba.neirba.exception.CountryNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,33 +13,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/city")
 public class CityController {
-    @Autowired
-    private  CityService cityService;
-    @Autowired
-    private CountryService countryService;
+    private final CityService cityService;
+    private final CountryService countryService;
+    private final CityMapper cityMapper = CityMapper.INSTANCE;
+
+    public CityController(CityService cityService, CountryService countryService) {
+        this.cityService = cityService;
+        this.countryService = countryService;
+    }
 
     @GetMapping("/all")
-    public ResponseEntity<List<City>> getAllCities() {
-        List<City> cities = cityService.findAllCities();
-        return ResponseEntity.ok(cities);
+    public ResponseEntity<List<CityDTO>> getAllCities() {
+        List<CityDTO> citiesDTO = cityMapper.citiesToCitiesDTO(cityService.findAllCities());
+        return ResponseEntity.ok(citiesDTO);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<City> getCityById(@PathVariable("id") Long id) {
-        City city = cityService.findCityById(id);
-        return ResponseEntity.ok(city);
+    public ResponseEntity<CityDTO> getCityById(@PathVariable("id") Long id) {
+        CityDTO cityDTO = cityMapper.cityToCityDTO(cityService.findCityById(id));
+        return ResponseEntity.ok(cityDTO);
     }
 
     @GetMapping("/find/all/country/{countryName}")
-    public ResponseEntity<List<City>> getCitiesByCountryName(@PathVariable("countryName") String countryName) {
-        List<City> cities = cityService.findAllByCountryName(countryName);
-        return ResponseEntity.ok(cities);
+    public ResponseEntity<List<CityDTO>> getCitiesByCountryName(@PathVariable("countryName") String countryName) {
+        List<CityDTO> citiesDTO = cityMapper.citiesToCitiesDTO(cityService.findAllByCountryName(countryName));
+        return ResponseEntity.ok(citiesDTO);
     }
 
     @GetMapping("/find/city/{cityName}/country/{countryName}")
-    public ResponseEntity<City> getCityByCountryNameAndCityName(@PathVariable("countryName") String countryName, @PathVariable("cityName") String cityName) {
-        City city = cityService.findCityByNameAndCountryName(cityName, countryName);
-        return ResponseEntity.ok(city);
+    public ResponseEntity<CityDTO> getCityByCountryNameAndCityName(@PathVariable("countryName") String countryName, @PathVariable("cityName") String cityName) {
+        CityDTO cityDTO = cityMapper.cityToCityDTO(cityService.findCityByNameAndCountryName(cityName, countryName));
+        return ResponseEntity.ok(cityDTO);
     }
 
 
