@@ -26,15 +26,15 @@ public class CountryController {
     }
 
     @GetMapping("/find/name/{name}")
-    public ResponseEntity<Country> getCountryByName(@PathVariable("name") String name) {
-        Country country = countryService.findCountryByName(name);
-        return ResponseEntity.ok(country);
+    public ResponseEntity<CountryDTO> getCountryByName(@PathVariable("name") String name) {
+        CountryDTO countryDTO = countryMapper.countryToCountryDTO(countryService.findCountryByName(name));
+        return ResponseEntity.ok(countryDTO);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Country> getCountryById(@PathVariable("id") Long id) {
-        Country country = countryService.findCountryById(id);
-        return ResponseEntity.ok(country);
+    public ResponseEntity<CountryDTO> getCountryById(@PathVariable("id") Long id) {
+        CountryDTO countryDTO = countryMapper.countryToCountryDTO(countryService.findCountryById(id));
+        return ResponseEntity.ok(countryDTO);
     }
 
     @PostMapping("/add")
