@@ -2,10 +2,13 @@ package com.neirba.neirba.neighborhood;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.neirba.neirba.city.City;
+import com.neirba.neirba.rating.Rating;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -29,5 +32,8 @@ public class Neighborhood implements Serializable {
             foreignKey=@ForeignKey(name = "FK_city_neighborhood"))
     @JsonBackReference
     private City city;
+
+    @OneToMany(mappedBy = "neighborhood", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Rating> ratings = new HashSet<>();
 
 }
