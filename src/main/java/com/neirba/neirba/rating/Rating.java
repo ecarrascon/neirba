@@ -1,7 +1,6 @@
 package com.neirba.neirba.rating;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neirba.neirba.neighborhood.Neighborhood;
 import com.neirba.neirba.security.user.UserSecurity;
 import lombok.*;
@@ -30,7 +29,7 @@ public class Rating implements Serializable {
     private Neighborhood neighborhood;
 
     @OneToMany
-    @JsonManagedReference
+
     private Set<UserSecurity> users = new HashSet<>();
 
 
